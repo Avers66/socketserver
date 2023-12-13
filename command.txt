@@ -1,0 +1,18 @@
+docker build . -t avers66/socket-server
+
+# --rm удаляет контейнер после остановки
+docker run  --rm -p 8888:8888  --name socket-server avers66/socket-server
+
+docker container ls
+
+#Определяем IP адрес по id или имени контейнера
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 238ebcc5737c
+docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' socket-server
+
+#Сеть между контейнерами
+docker network create socket-network
+docker run  --rm -p 8888:8888  --name socket-server --network socket-network avers66/socket-server
+
+
+#Запуск docker-compose
+docker-compose up

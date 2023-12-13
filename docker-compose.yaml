@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  socket-server:
+    image: avers66/socket-server
+    networks:
+      - socket-network
+    ports:
+      - 8888:8888
+
+  socket-client:
+    image: avers66/socket-client
+    environment:
+      - SOCKET_SERVER_HOST=socket-server
+    networks:
+      - socket-network
+    depends_on:
+      - socket-server
+
+networks:
+   socket-network:
